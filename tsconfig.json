@@ -9,7 +9,25 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ]
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+        "@hooks/*": [
+            "./src/hooks/*"
+        ],
+      "@lib/*": [
+        "./src/lib/*"
+      ],
+      "store/*": [
+        "./src/store/*"
+      ],
+      "data/*": [
+        "./src/data/*"
+      ],
+        "types/*": [
+            "./src/types/*"
+        ],
     },
 
     /* Bundler mode */
