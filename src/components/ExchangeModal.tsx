@@ -94,7 +94,6 @@ function ExchangeModal({
     };
     await exchange(formData)
       .then((res) => {
-        // @ts-expect-error
         toast.success(res.message);
       })
       .catch((err) => {
@@ -118,11 +117,15 @@ function ExchangeModal({
   );
 
   const getRemainingAmount = (amount: number) => {
+    if (amount < 0) return sellingCoinBalance;
+    if (amount > sellingCoinBalance) return 0;
     if (!amount) return sellingCoinBalance;
     return sellingCoinBalance - amount;
   };
 
   const getRemainingPercentage = (amount: number) => {
+    if (amount < 0) return 0;
+    if (amount > sellingCoinBalance) return 0;
     if (!amount) return 0;
     const percentage = (amount / sellingCoinBalance) * 100;
     return 100 - percentage;
@@ -131,7 +134,7 @@ function ExchangeModal({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Buy</Button>
+        <Button variant="outline">Exchange</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
