@@ -18,6 +18,7 @@ import { Input } from '@/components/ui/input';
 import coins from '@/data/coinValues.ts';
 import { exchange } from '@/services/exchnage.ts';
 import { CoinDropdownItem } from '@/types/CoinDropdown.ts';
+import TooltipWrapper from '@components/TooltipWrapper.tsx';
 import {
   Form,
   FormControl,
@@ -31,6 +32,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@components/ui/popover.tsx';
+import { Progress } from '@components/ui/progress.tsx';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cn } from '@lib/utils.ts';
 import { Check, ChevronsUpDown, Loader2 } from 'lucide-react';
@@ -42,42 +44,46 @@ import * as z from 'zod';
 
 interface ExchangeModalProps {
   sellingCoinType: CoinDropdownItem;
+  sellingCoinBalance: number;
 }
 
-const FormSchema = z.object({
-  amount: z
-    .string()
-    .refine(
-      (data) => {
-        const numericValue = parseFloat(data);
-        return !isNaN(numericValue);
-      },
-      {
-        message: 'Please enter a valid number for the amount.',
-      },
-    )
-    .refine(
-      (data) => {
-        const numericValue = parseFloat(data);
-        return numericValue >= 1 && numericValue <= 1000000;
-      },
-      {
-        message: 'Amount must be positive and less than 1,000,000.',
-      },
-    )
-    .transform((data) => parseFloat(data)),
-
-  buyingCoinType: z
-    .string({
-      required_error: 'Please select an coin to exchange.',
-    })
-    .min(1, {
-      message: 'Please select an coin to exchange.',
-    }),
-});
-
-function ExchangeModal({ sellingCoinType }: ExchangeModalProps) {
+function ExchangeModal({
+  sellingCoinType,
+  sellingCoinBalance,
+}: ExchangeModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const FormSchema = z.object({
+    amount: z
+      .string()
+      .refine(
+        (data) => {
+          const numericValue = parseFloat(data);
+          return !isNaN(numericValue);
+        },
+        {
+          message: 'Please enter a valid number for the amount.',
+        },
+      )
+      .refine(
+        (data) => {
+          const numericValue = parseFloat(data);
+          return numericValue >= 1 && numericValue <= sellingCoinBalance;
+        },
+        {
+          message: 'You do not have enough coins to exchange.',
+        },
+      )
+      .transform((data) => parseFloat(data)),
+
+    buyingCoinType: z
+      .string({
+        required_error: 'Please select an coin to exchange.',
+      })
+      .min(1, {
+        message: 'Please select an coin to exchange.',
+      }),
+  });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     setIsSubmitting(true);
@@ -88,6 +94,7 @@ function ExchangeModal({ sellingCoinType }: ExchangeModalProps) {
     };
     await exchange(formData)
       .then((res) => {
+        // @ts-expect-error
         toast.success(res.message);
       })
       .catch((err) => {
@@ -101,7 +108,7 @@ function ExchangeModal({ sellingCoinType }: ExchangeModalProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      amount: 1,
+      amount: undefined,
       buyingCoinType: undefined,
     },
   });
@@ -109,6 +116,17 @@ function ExchangeModal({ sellingCoinType }: ExchangeModalProps) {
   const otherCoins = coins.filter(
     (coin) => coin.value !== sellingCoinType.value,
   );
+
+  const getRemainingAmount = (amount: number) => {
+    if (!amount) return sellingCoinBalance;
+    return sellingCoinBalance - amount;
+  };
+
+  const getRemainingPercentage = (amount: number) => {
+    if (!amount) return 0;
+    const percentage = (amount / sellingCoinBalance) * 100;
+    return 100 - percentage;
+  };
 
   return (
     <Dialog>
@@ -215,13 +233,23 @@ function ExchangeModal({ sellingCoinType }: ExchangeModalProps) {
                       type="number"
                       autoComplete="off"
                       min={1}
-                      max={1000000}
+                      max={sellingCoinBalance}
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
+            />
+            <TooltipWrapper
+              trigger={
+                <Progress
+                  value={getRemainingPercentage(form.watch('amount'))}
+                />
+              }
+              content={`You will have ${getRemainingAmount(
+                form.watch('amount'),
+              )} ${sellingCoinType.label} left`}
             />
             <DialogFooter>
               <Button
