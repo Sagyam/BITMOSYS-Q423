@@ -1,7 +1,6 @@
 import { CoinExchangeDto } from 'types/CoinExchangeDto.ts';
 
 export const exchange = async (exchange: CoinExchangeDto) => {
-  // this function has 50% chance of failing but wait for 1 second
   const random = Math.random();
   return new Promise((resolve, reject) => {
     setTimeout(() => {
