@@ -1,3 +1,5 @@
+import { ModeToggle } from '@components/ModeToggle.tsx';
+
 const Navbar = () => {
   return (
     <nav className="flex justify-center items-center py-6">
@@ -15,6 +17,7 @@ const Navbar = () => {
           Cryptos
         </a>
       </div>
+      <ModeToggle />
     </nav>
   );
 };
