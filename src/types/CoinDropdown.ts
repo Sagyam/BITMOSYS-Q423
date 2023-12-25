@@ -1,5 +1,6 @@
-export type CoinDropdownItem = {
-  label: string;
-  value: string;
+export type Coin = {
+  name: string;
+  symbol: string;
+  balance: number;
   icon: string;
 };

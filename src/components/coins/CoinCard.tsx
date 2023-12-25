@@ -12,7 +12,7 @@ export interface CoinCardProps {
 const CoinCard: React.FC<CoinCardProps> = (props) => {
   const { icon, name, symbol, balance } = props;
   return (
-    <div className="flex items-center justify-between rounded-lg bg-secondary p-4 mb-4">
+    <div className="flex items-center justify-between rounded-lg bg-secondary px-8 py-4 mb-4">
       <div className="flex items-center">
         <img src={icon} alt={name} className="w-8 h-8 mr-4" />
         <span>{name}</span>
@@ -20,7 +20,7 @@ const CoinCard: React.FC<CoinCardProps> = (props) => {
       <div className="flex items-center">
         <span className="font-semibold mr-4">{balance}</span>
         <ExchangeModal
-          sellingCoinType={{ label: name, value: symbol, icon }}
+          sellingCoinType={{ name, symbol, icon, balance }}
           sellingCoinBalance={balance}
         />
       </div>

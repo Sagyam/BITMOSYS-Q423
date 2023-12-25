@@ -1,4 +1,5 @@
 import CoinCard, { CoinCardProps } from '@components/coins/CoinCard.tsx';
+import { ScrollArea } from '@components/ui/scroll-area.tsx';
 import React from 'react';
 
 interface CoinCardWrapperProps {
@@ -10,7 +11,7 @@ const CoinCardWrapper: React.FC<CoinCardWrapperProps> = (props) => {
   return (
     <>
       <h3 className="text-xl font-semibold tracking-tight mb-4">Your Coins</h3>
-      <div className="grid-cols-1 gap-y-4 w-[400px]">
+      <ScrollArea className="h-96 w-[450px]">
         {coins.map((coin) => {
           return (
             <CoinCard
@@ -22,7 +23,7 @@ const CoinCardWrapper: React.FC<CoinCardWrapperProps> = (props) => {
             />
           );
         })}
-      </div>
+      </ScrollArea>
     </>
   );
 };

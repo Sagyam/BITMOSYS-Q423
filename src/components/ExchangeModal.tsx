@@ -17,7 +17,7 @@ import {
 import { Input } from '@/components/ui/input';
 import coins from '@/data/coinValues.ts';
 import { exchange } from '@/services/exchnage.ts';
-import { CoinDropdownItem } from '@/types/CoinDropdown.ts';
+import { Coin } from '@/types/CoinDropdown.ts';
 import TooltipWrapper from '@components/TooltipWrapper.tsx';
 import {
   Form,
@@ -43,7 +43,7 @@ import { CoinExchangeDto } from 'types/CoinExchangeDto.ts';
 import * as z from 'zod';
 
 interface ExchangeModalProps {
-  sellingCoinType: CoinDropdownItem;
+  sellingCoinType: Coin;
   sellingCoinBalance: number;
 }
 
@@ -88,7 +88,7 @@ function ExchangeModal({
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     setIsSubmitting(true);
     const formData: CoinExchangeDto = {
-      sellingCoinSymbol: sellingCoinType.value,
+      sellingCoinSymbol: sellingCoinType.symbol,
       buyingCoinSymbol: data.buyingCoinType,
       sellingCoinAmount: data.amount,
     };
@@ -113,7 +113,7 @@ function ExchangeModal({
   });
 
   const otherCoins = coins.filter(
-    (coin) => coin.value !== sellingCoinType.value,
+    (coin) => coin.symbol !== sellingCoinType.symbol,
   );
 
   const getRemainingAmount = (amount: number) => {
@@ -138,7 +138,7 @@ function ExchangeModal({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Exchange {sellingCoinType.label} with</DialogTitle>
+          <DialogTitle>Exchange {sellingCoinType.name} with</DialogTitle>
         </DialogHeader>
 
         {/* Form */}
@@ -168,7 +168,7 @@ function ExchangeModal({
                             <img
                               src={
                                 otherCoins.find(
-                                  (coin) => coin.value === field.value,
+                                  (coin) => coin.symbol === field.value,
                                 )?.icon
                               }
                               className="w-4 h-4 mr-2"
@@ -176,8 +176,8 @@ function ExchangeModal({
                           )}
                           {field.value
                             ? otherCoins.find(
-                                (coin) => coin.value === field.value,
-                              )?.label
+                                (coin) => coin.symbol === field.value,
+                              )?.name
                             : 'Select Coin'}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
@@ -190,16 +190,16 @@ function ExchangeModal({
                         <CommandGroup>
                           {otherCoins.map((coin) => (
                             <CommandItem
-                              value={coin.label}
-                              key={coin.value}
+                              value={coin.name}
+                              key={coin.symbol}
                               onSelect={() => {
-                                form.setValue('buyingCoinType', coin.value);
+                                form.setValue('buyingCoinType', coin.symbol);
                               }}
                             >
                               <Check
                                 className={cn(
                                   'mr-2 h-4 w-4',
-                                  coin.value === field.value
+                                  coin.symbol === field.value
                                     ? 'opacity-100'
                                     : 'opacity-0',
                                 )}
@@ -210,7 +210,7 @@ function ExchangeModal({
                                     src={coin.icon}
                                     className="w-4 h-4 mr-2"
                                   />
-                                  <span>{coin.label}</span>
+                                  <span>{coin.name}</span>
                                 </>
                               }
                             </CommandItem>
@@ -229,10 +229,10 @@ function ExchangeModal({
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Amount of {sellingCoinType.label}</FormLabel>
+                  <FormLabel>Amount of {sellingCoinType.name}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={`Amount of ${sellingCoinType.label}`}
+                      placeholder={`Amount of ${sellingCoinType.name}`}
                       type="number"
                       autoComplete="off"
                       min={1}
@@ -252,7 +252,7 @@ function ExchangeModal({
               }
               content={`You will have ${getRemainingAmount(
                 form.watch('amount'),
-              )} ${sellingCoinType.label} left`}
+              )} ${sellingCoinType.name} left`}
             />
             <DialogFooter>
               <Button

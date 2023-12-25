@@ -1,29 +1,34 @@
-import { CoinDropdownItem } from 'types/CoinDropdown.ts';
+import { Coin } from 'types/CoinDropdown.ts';
 
-const coins: CoinDropdownItem[] = [
+const coins: Coin[] = [
   {
-    label: 'Bitcoin',
-    value: 'btc',
+    name: 'Bitcoin',
+    symbol: 'btc',
+    balance: 50,
     icon: 'https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=029',
   },
   {
-    label: 'Ethereum',
-    value: 'eth',
+    name: 'Ethereum',
+    symbol: 'eth',
+    balance: 32,
     icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=029',
   },
   {
-    label: 'Dogecoin',
-    value: 'doge',
+    name: 'Dogecoin',
+    symbol: 'doge',
+    balance: 1000,
     icon: 'https://cryptologos.cc/logos/dogecoin-doge-logo.svg?v=029',
   },
   {
-    label: 'Litecoin',
-    value: 'ltc',
+    name: 'Litecoin',
+    symbol: 'ltc',
+    balance: 1000,
     icon: 'https://cryptologos.cc/logos/litecoin-ltc-logo.svg?v=029',
   },
   {
-    label: 'Monero',
-    value: 'xmr',
+    name: 'Monero',
+    symbol: 'xmr',
+    balance: 1000,
     icon: 'https://cryptologos.cc/logos/monero-xmr-logo.svg?v=029',
   },
 ];

@@ -1,5 +1,5 @@
 import { buy } from '@/services/buy.ts';
-import { CoinDropdownItem } from '@/types/CoinDropdown.ts';
+import { Coin } from '@/types/CoinDropdown.ts';
 import { Button } from '@components/ui/button.tsx';
 import {
   Dialog,
@@ -27,7 +27,7 @@ import { BuyCoinDto } from 'types/BuyCoinDto.ts';
 import * as z from 'zod';
 
 interface BuyModalProps {
-  buyingCoinType: CoinDropdownItem;
+  buyingCoinType: Coin;
 }
 
 const BuyModal: React.FC<BuyModalProps> = ({ buyingCoinType }) => {
@@ -67,7 +67,7 @@ const BuyModal: React.FC<BuyModalProps> = ({ buyingCoinType }) => {
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     setIsSubmitting(true);
     const formData: BuyCoinDto = {
-      buyingCoinSymbol: buyingCoinType.value,
+      buyingCoinSymbol: buyingCoinType.symbol,
       buyingCoinAmount: data.amount,
     };
     await buy(formData)
@@ -89,7 +89,7 @@ const BuyModal: React.FC<BuyModalProps> = ({ buyingCoinType }) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Buy {buyingCoinType.label}</DialogTitle>
+          <DialogTitle>Buy {buyingCoinType.name}</DialogTitle>
         </DialogHeader>
 
         {/* Form */}
@@ -106,7 +106,7 @@ const BuyModal: React.FC<BuyModalProps> = ({ buyingCoinType }) => {
                   <FormLabel>Amount</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={`Amount of ${buyingCoinType.label}`}
+                      placeholder={`Amount of ${buyingCoinType.name}`}
                       type="number"
                       autoComplete="off"
                       min={1}

@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@components/ui/card.tsx';
 import React from 'react';
 
-interface StatCardProps {
+export interface StatCardProps {
   name: string;
   content: string;
   icon: React.ReactNode;
@@ -9,9 +9,9 @@ interface StatCardProps {
 
 const StatCard: React.FC<StatCardProps> = ({ name, content, icon }) => {
   return (
-    <Card className="py-4">
+    <Card className="pt-6">
       <CardContent>
-        <div className="flex items-center space-x-8">
+        <div className="flex items-center space-x-6">
           <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary-foreground">
             {icon}
           </div>
