@@ -4,14 +4,15 @@ import React from 'react';
 
 interface CoinCardWrapperProps {
   coins: CoinCardProps[];
+  showBuy?: boolean;
+  showExchange?: boolean;
 }
 
 const CoinCardWrapper: React.FC<CoinCardWrapperProps> = (props) => {
   const { coins } = props;
   return (
     <>
-      <h3 className="text-xl font-semibold tracking-tight mb-4">Your Coins</h3>
-      <ScrollArea className="h-96 w-[450px]">
+      <ScrollArea className="h-[300px] w-[450px] my-4">
         {coins.map((coin) => {
           return (
             <CoinCard
@@ -20,6 +21,8 @@ const CoinCardWrapper: React.FC<CoinCardWrapperProps> = (props) => {
               name={coin.name}
               symbol={coin.symbol}
               balance={coin.balance}
+              showBuy={props.showBuy || false}
+              showExchange={props.showExchange || false}
             />
           );
         })}

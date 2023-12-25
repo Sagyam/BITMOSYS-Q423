@@ -4,32 +4,37 @@ const coins: Coin[] = [
   {
     name: 'Bitcoin',
     symbol: 'btc',
-    balance: 50,
+    balance: 10,
     icon: 'https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=029',
+    brandColor: '#f7931a',
   },
   {
     name: 'Ethereum',
     symbol: 'eth',
-    balance: 32,
+    balance: 20,
     icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=029',
+    brandColor: '#627eea',
   },
   {
     name: 'Dogecoin',
     symbol: 'doge',
-    balance: 1000,
+    balance: 30,
     icon: 'https://cryptologos.cc/logos/dogecoin-doge-logo.svg?v=029',
+    brandColor: '#c3a634',
   },
   {
     name: 'Litecoin',
     symbol: 'ltc',
-    balance: 1000,
+    balance: 15,
     icon: 'https://cryptologos.cc/logos/litecoin-ltc-logo.svg?v=029',
+    brandColor: '#345d9d',
   },
   {
     name: 'Monero',
     symbol: 'xmr',
-    balance: 1000,
+    balance: 22,
     icon: 'https://cryptologos.cc/logos/monero-xmr-logo.svg?v=029',
+    brandColor: '#ff6600',
   },
 ];
 

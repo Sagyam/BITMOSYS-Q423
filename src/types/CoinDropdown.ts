@@ -3,4 +3,5 @@ export type Coin = {
   symbol: string;
   balance: number;
   icon: string;
+  brandColor: string;
 };
