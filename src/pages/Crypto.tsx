@@ -29,6 +29,7 @@ const Crypto = () => {
             name: coin.name,
             symbol: coin.symbol,
             balance: coin.balance,
+            brandColor: coin.brandColor,
           };
         })}
         showBuy={true}

@@ -29,6 +29,7 @@ const Home = () => {
             name: coin.name,
             symbol: coin.symbol,
             balance: coin.balance,
+            brandColor: coin.brandColor,
           };
         })}
         showExchange={true}
