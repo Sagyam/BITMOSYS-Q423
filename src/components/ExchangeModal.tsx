@@ -93,14 +93,15 @@ function ExchangeModal({
       sellingCoinAmount: data.amount,
     };
     await exchange(formData)
-      .then((res) => {
-        toast.success(res.message);
+      .then(() => {
+        //toast.success(res.message);
       })
-      .catch((err) => {
-        toast.error(err.message);
+      .catch(() => {
+        //toast.error(err.message);
       })
       .finally(() => {
         setIsSubmitting(false);
+        toast.info('This feature wii be available soon.');
       });
   };
 
