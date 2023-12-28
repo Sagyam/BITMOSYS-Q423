@@ -21,6 +21,7 @@ const CoinCardWrapper: React.FC<CoinCardWrapperProps> = (props) => {
               name={coin.name}
               symbol={coin.symbol}
               balance={coin.balance}
+              brandColor={coin.brandColor}
               showBuy={props.showBuy || false}
               showExchange={props.showExchange || false}
             />

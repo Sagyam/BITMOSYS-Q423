@@ -36,6 +36,27 @@ const coins: Coin[] = [
     icon: 'https://cryptologos.cc/logos/monero-xmr-logo.svg?v=029',
     brandColor: '#ff6600',
   },
+  {
+    name: 'Solana',
+    symbol: 'sol',
+    balance: 18,
+    icon: 'https://cryptologos.cc/logos/solana-sol-logo.svg?v=029',
+    brandColor: '#000',
+  },
+  {
+    name: 'Dash',
+    symbol: 'dash',
+    balance: 12,
+    icon: 'https://cryptologos.cc/logos/dash-dash-logo.svg?v=029',
+    brandColor: '#008ce7',
+  },
+  {
+    name: 'Zcash',
+    symbol: 'zec',
+    balance: 8,
+    icon: 'https://cryptologos.cc/logos/zcash-zec-logo.svg?v=029',
+    brandColor: '#f4b728',
+  },
 ];
 
 export default coins;
